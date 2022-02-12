@@ -103,9 +103,9 @@ def updateBtleInfoFromKeyboard(bInfo,option="defaults"):
     if myKeys:
         #Verification finale
         bInfo.Print(debug=True)
-        rep=input("Info correcte? <y> \n")
-        if not ((rep=="") or (rep=="y")):
-            print("Info incorrecte. Recommençons...")
+        rep=input("Modifier d'autres informations? <n> \n")
+        if not ((rep=="") or (rep=="n")):
+            print("Nouvelles corrections ou modifications...")
             time.sleep(1)
             return updateBtleInfoFromKeyboard(bInfo,option)
     
