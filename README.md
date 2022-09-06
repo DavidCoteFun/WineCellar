@@ -6,11 +6,18 @@ https://github.com/DavidCoteFun/WineCellar
 ```
 *) Install Anaconda3
 
-*) Install HomeBrew:
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+*) Install HomeBrew and zbar
 
-*) Install special libraries:
+#On new Mac architecture arm64 (M1)
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install zbar
+
+#On old Mac architecture x86_64 (Intel)
+arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+arch -x86_64 /usr/local/bin/brew install zbar 
+
+*) Additional python libraries:
 pip install pyzbar
 pip install opencv-python
 pip install requests-html
