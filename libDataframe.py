@@ -42,7 +42,7 @@ def get_default_values():
     return dVal
 
 
-def init_global_df(fDir="fichiers_csv",fName="MaCave.csv"):
+def init_global_df(fDir="../WineCellarData",fName="MaCave.csv"):
     global gDF, df_original
     if gDF is None:
         gDF=load_df(fDir,fName)
@@ -50,19 +50,16 @@ def init_global_df(fDir="fichiers_csv",fName="MaCave.csv"):
         df_original=gDF.copy(deep=True)
     return gDF
 
-def load_df(fDir="fichiers_csv",fName="MaCave.csv"):
+def load_df(fDir,fName="MaCave.csv"):
     try:
         ffName="%s/%s"%(fDir,fName)
         print("Loading DataFrame %s ..."%ffName)
-        df = pd.read_csv(ffName, index_col=None, header=0, encoding=theEncoding, dtype={'CodeCUP': str, 'CodeSAQ':str})
-        #df = pd.read_csv(ffName, dtype={'CodeCUP': str, 'CodeSAQ':str})
-        #df = pd.read_csv(ffName)
+        df = pd.read_csv(ffName, index_col=None, header=0, encoding=theEncoding, dtype={'CodeCUP': str, 'CodeSAQ':str}, sep="|")
         df=df.fillna('')
     except:
         print("Erreur avec %s"%ffName)
         print("Retourne un DataFrame vide...")
         df=pd.DataFrame(columns=get_default_values().keys())
-
     return df
 
 def resume_de_la_cave(df,verbose=1):
@@ -75,7 +72,7 @@ def resume_de_la_cave(df,verbose=1):
         pass
     return cInfo
 
-def write_df(fDir="fichiers_csv",fName="MaCave.csv",doBackup=True):
+def write_df(fDir="../WineCellarData",fDirBack="fichiers_csv",fName="MaCave.csv",doBackup=True):
     global gDF
     if doBackup:
         global df_original
@@ -86,7 +83,7 @@ def write_df(fDir="fichiers_csv",fName="MaCave.csv",doBackup=True):
             myDay=date.today()
             bfName=fName.replace(".csv","_backup_%s.%s.%s.csv"%(myDay.year,myDay.month,myDay.day))
             if not (bfName in allFiles):
-                fbfName="%s/%s"%(fDir,bfName)
+                fbfName="%s/%s"%(fDirBack,bfName)
                 print("Backup: %s"%fbfName)
                 df_original.to_csv(fbfName, encoding=theEncoding,index=False)
                 pass
@@ -94,7 +91,7 @@ def write_df(fDir="fichiers_csv",fName="MaCave.csv",doBackup=True):
         pass
     
     ffName="%s/%s"%(fDir,fName)
-    gDF.to_csv(ffName, encoding=theEncoding,index=False)
+    gDF.to_csv(ffName, encoding=theEncoding,index=False,sep="|")
     #gDF.to_excel(ffName.replace(".csv",".xslx"))
     print("Mise à jour du fichier: %s"%ffName)
     return
