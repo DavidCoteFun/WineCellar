@@ -36,6 +36,7 @@ Version 1.0.3 --> Option d'ajouter code SAQ manuellement, fonction resume_de_la_
 23 avil 2021: premier inventaire complet de la cave (utilisant v1.0.3)
 Version 1.0.4 --> Minor bug fix avec getWebInfo avec cup "custom"
 Version 1.1.0: mise à jour de libWeb.py pour suivre le nouveau site de la SAQ (28.07.2021)
+Version 1.2.0: changed csv schema to use "|" separator, split code from data with new WineCellarData repo
 ```
 
 ## Usage:
