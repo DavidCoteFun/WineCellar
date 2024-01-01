@@ -6,11 +6,7 @@ Created on Thu Jan 21 22:48:33 2021
 @author: dcote
 """
 
-import imutils
-from imutils.video import VideoStream
 import libDataframe as lDF
-from pyzbar import pyzbar
-import cv2
 import time
 
 
@@ -26,6 +22,11 @@ def getCUP(debug=False):
     return myCUP
 
 def getCUPFromCamera(debug=False):
+    import imutils
+    from imutils.video import VideoStream
+    from pyzbar import pyzbar
+    import cv2
+
     myCUP=None
     print("Montrez une bouteille à la camera...") 
     vs = VideoStream(src=0).start()
