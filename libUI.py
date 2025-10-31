@@ -97,8 +97,10 @@ def updateBtleInfoFromKeyboard(bInfo,dateBue=""):
             rep=input("%s: ? <%s> \n"%(k,bDic[k]))
             if rep:
                 isOK=True
-                if "," in rep:
-                    print("pas de virgule svp")
+                if "|" in rep:
+                    print("caractère spécial: |")
+                    print("commande ignorée")
+                    isOK=False
                     
                 if isOK:
                     if k in ['Millesime','BoireMin','BoireMax','Format']:
