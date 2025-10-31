@@ -37,6 +37,7 @@ Version 1.0.3 --> Option d'ajouter code SAQ manuellement, fonction resume_de_la_
 Version 1.0.4 --> Minor bug fix avec getWebInfo avec cup "custom"
 Version 1.1.0: mise à jour de libWeb.py pour suivre le nouveau site de la SAQ (28.07.2021)
 Version 1.2.0: changed csv schema to use "|" separator, split code from data with new WineCellarData repo
+Version 1.3.0: ajout de l'option date, unification de Boire et Editer. 
 ```
 
 ## Usage:
@@ -52,6 +53,7 @@ python MaCave.py Ajouter
 python MaCave.py Ajouter x5
 python MaCave.py Boire
 python MaCave.py Editer
+./MaCave.py Bo date:2026-3-25 cup:3337694116104
 ```
 
 ### Details
@@ -78,4 +80,11 @@ File --> SaveAs --> Format CSV UTF-8
 ```
 cup:BelleHelene2009
 cup:xyz
+```
+
+### To Do
+```
+-Enlever la fonction lDF.boire_bouteille() dans MaCave.py. Utilser uniquement lDF.modifier_bouteille() à la place.
+-Mettre à jour la fonction qui lit depuis le site web de la SAQ
+
 ```

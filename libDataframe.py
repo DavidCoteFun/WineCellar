@@ -191,22 +191,30 @@ def ajouter_bouteille(btleInfo,nBtles=1):
     return
 
 
-def boire_bouteille(btleInfo):
+def boire_bouteille(btleInfo,theDate="",theIndex=-1):
     global gDF
-    theIndex=get_df_index(btleInfo,btle_pleine=True)
+    if theIndex<0:
+        theIndex=get_df_index(btleInfo,btle_pleine=True)
+
     if theIndex is None:
         print("Warning - Pas de bouteille disponible pour boire!")
     else:
-        myDay=date.today()
-        gDF['Bue'].at[theIndex]="%s-%s-%s"%(myDay.year,myDay.month,myDay.day)
-    return
+        if theDate=="":
+            myDay=date.today()
+            gDF['Bue'].at[theIndex]="%s-%s-%s"%(myDay.year,myDay.month,myDay.day)
+        else:
+            gDF['Bue'].at[theIndex]=theDate
+            pass
+        pass    
+    return theIndex
 
-def modifier_bouteille(btleInfo):
-    theIndex=get_df_index(btleInfo,btle_pleine=False)
+def modifier_bouteille(btleInfo,theIndex=-1):
+    if theIndex<0:
+        theIndex=get_df_index(btleInfo,btle_pleine=False)
     if theIndex is None:
         print("Warning - Pas d'index pour modifier")
     else:
         for k in btleInfo.resolved_dict:
             gDF[k].at[theIndex]=btleInfo.resolved_dict[k]
-    return
+    return theIndex
 

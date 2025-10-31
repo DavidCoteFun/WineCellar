@@ -5,7 +5,7 @@ Created on Thu Jan 21 22:48:33 2021
 
 @author: dcote
 """
-theVersion="1.1.0"
+theVersion="1.3.0"
 
 import sys
 import libDataframe as lDF
@@ -20,6 +20,8 @@ from libBtleInfo import BtleInfo
 
 print("Ma Cave - Version %s \n"%theVersion)
 
+myIndex=-1
+myDate=""
 myCUP=None
 Test=False
 Debug=False
@@ -37,20 +39,24 @@ for arg in args:
     elif arg.startswith('x'):
         nBtles=int(arg.split('x')[1])
     elif arg.startswith('Aj'):
-        Ajouter=True
         print("  *** AJOUTER ***")
+        Ajouter=True
     elif (arg.startswith('Bo') or arg.startswith('En')):
-        Enlever=True
         print("  *** BOIRE ***")
-    elif arg.startswith('Ed'):
+        Enlever=True
         Editer=True
+    elif arg.startswith('Ed'):
         print("  *** EDITER ***")
+        Editer=True
     elif arg.startswith('In'):
-        Info=True    
         print("  *** INFO ***")
+        Info=True    
     elif arg.startswith("cup:"):
         myCUP=arg.split("cup:")[1]
         print("  *** SET CUP : %s ***"%myCUP)
+    elif arg.startswith("date:"):
+        myDate=arg.split("date:")[1]
+        print("  *** SET DATE : %s ***"%myDate)
     elif arg=="-h" or arg=="help":
         print("*** HELP CENTER ***")
         print("#test or debug")
@@ -62,6 +68,7 @@ for arg in args:
         print("python MaCave.py Ajouter cup:1234524")
         print("python MaCave.py Boire")
         print("python MaCave.py Editer")
+        print("./MaCave.py Bo date:2026-3-25 cup:3337694116104")
         print(" ")
         sys.exit()
     else:
@@ -97,9 +104,8 @@ if myCUP:
         pass
     
     bInfo.resolve()
-            
     if Ajouter or Editer:
-        bInfo.edit_btle()
+        bInfo.edit_btle(myDate)
     else:
         bInfo.Print(True)
 
@@ -108,11 +114,11 @@ if bInfo.is_ready():
     if Ajouter:
         lDF.ajouter_bouteille(bInfo,nBtles)
     
-    if Enlever:
-        lDF.boire_bouteille(bInfo)
-    
     if Editer:
-        lDF.modifier_bouteille(bInfo)
+        myIndex=lDF.modifier_bouteille(bInfo,myIndex)
+    elif Enlever:
+        #probablement inutile maintenant
+        myIndex=lDF.boire_bouteille(bInfo,myDate,myIndex)
     
     if (Ajouter or Editer or Enlever):
         if Ajouter:
@@ -123,6 +129,9 @@ if bInfo.is_ready():
             rep=input("Modifier la base de données pour Editer? <y> \n")
 
         if (rep == "") or (rep == "y"):
+            if Debug:
+                bInfo.Print(True)
+                pass
             lDF.write_df(doBackup=True)
             print("INTIAL:")
             lDF.resume_de_la_cave(lDF.df_original,verbose=1)

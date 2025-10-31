@@ -29,7 +29,6 @@ class BtleInfo():
     def is_ready(self):
         return len(self.resolved_dict.keys())>1
     
-
     def Print(self,debug=False):
         if not self.is_ready():
             print("Warning - BtleInfo.resolved_dict is not ready")
@@ -165,7 +164,13 @@ class BtleInfo():
 
         return True
 
-    def edit_btle(self):
-        lUI.updateBtleInfoFromKeyboard(self)
+    def edit_btle(self,dateBue=""):
+        lUI.updateBtleInfoFromKeyboard(self,dateBue)
         return
 
+    def set_date_bue(self,theDate):
+        if isinstance(theDate,str):
+            self.resolved_dict['Bue']=theDate
+        else:
+            print("Warning - wrong format date %s"%theDate)
+        return

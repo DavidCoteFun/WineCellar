@@ -8,6 +8,7 @@ Created on Thu Jan 21 22:48:33 2021
 
 import libDataframe as lDF
 import time
+from datetime import date
 
 
 def getCUP(debug=False):
@@ -52,7 +53,7 @@ def getCUPFromCamera(debug=False):
     vs.stop()
     return myCUP
 
-def updateBtleInfoFromKeyboard(bInfo,option="defaults"):
+def updateBtleInfoFromKeyboard(bInfo,dateBue=""):
     defaults=lDF.get_default_values()
     bDic=bInfo.resolved_dict
     if len(bInfo.original_dict)<1:
@@ -63,8 +64,8 @@ def updateBtleInfoFromKeyboard(bInfo,option="defaults"):
     print("<cr> : non merci")
     print("1 : ['Millesime','BoireMin','BoireMax']")
     print("2 : ['AcquiseOu','Notes']")
-    print("3 : all keys")
-    print("Bue (yyyy-m-d)")
+    print("3 : ['Bue','Notes']")
+    print("4 : all keys")
     myKeys=[] 
     rep=input("...or any comma-separated keys \n")
     if rep:
@@ -72,7 +73,9 @@ def updateBtleInfoFromKeyboard(bInfo,option="defaults"):
             myKeys=['Millesime','BoireMin','BoireMax']
         elif rep=="2":
             myKeys=['AcquiseOu','Notes']
-        elif rep=="3" or rep=="all":
+        elif rep=="3":
+            myKeys=['Bue','Notes']
+        elif rep=="4" or rep=="all":
             myKeys=lDF.get_default_values().keys()
         else:
             myKeys=rep.split(',')
@@ -83,7 +86,13 @@ def updateBtleInfoFromKeyboard(bInfo,option="defaults"):
                 if k=="BoireMin":
                     bDic[k]=bDic['Millesime']+5
                 elif k=="BoireMax":
-                    bDic[k]=bDic['Millesime']+10
+                    bDic[k]=bDic['Millesime']+15
+                elif k=="Bue":
+                    if len(dateBue)>0:
+                        bDic[k]=dateBue
+                    else:
+                        myDay=date.today()
+                        bDic[k]="%s-%s-%s"%(myDay.year,myDay.month,myDay.day)
                 
             rep=input("%s: ? <%s> \n"%(k,bDic[k]))
             if rep:
@@ -108,7 +117,7 @@ def updateBtleInfoFromKeyboard(bInfo,option="defaults"):
         if not ((rep=="") or (rep=="n")):
             print("Nouvelles corrections ou modifications...")
             time.sleep(1)
-            return updateBtleInfoFromKeyboard(bInfo,option)
+            return updateBtleInfoFromKeyboard(bInfo)
     
     return bInfo
 
