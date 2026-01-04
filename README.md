@@ -86,5 +86,9 @@ cup:xyz
 ```
 -Enlever la fonction lDF.boire_bouteille() dans MaCave.py. Utilser uniquement lDF.modifier_bouteille() à la place.
 -Mettre à jour la fonction qui lit depuis le site web de la SAQ
+-Ajouter une colonne dans la DB pour la date bouteille ajoutée
+-Clean-up colonne(s) non utilisées
+-Développer la fonction analytique pour produire un fichier pdf avec histogrammes vs temps de nombre de bouteilles non-bues, nombres de bouteilles ajoutées, nombre de bouteilles bues, prix vs temps. Possiblement certains de ces graphiques par régions (Bourgogne, Côte-Rôtie, etc.)
+-Pie charts de pays et régions, prix, prêt à boire afin de répondre à la question: est-ce qu'il manque qqchose à acheter? Est-ce qu'il y a des choses pressantes à boire?
 
 ```
