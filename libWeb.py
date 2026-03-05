@@ -6,10 +6,10 @@ Created on Thu Jan 21 22:48:33 2021
 @author: dcote
 """
 
-
 from requests_html import HTMLSession
 import json
 import urllib.request
+import libSelenium as lSelenium
 
 
 def getInfoFromSAQ(cupCode,debug=False):
@@ -39,13 +39,17 @@ def getInfoFromSAQ(cupCode,debug=False):
     saqInfo['Bue']="saq_web"
     return saqInfo
     
-
-def getSaqCode(cupCode):
+def getSAQCode_fromCUP_old_obsolete(cupCode):
+    # Historic function working with SAQ website up to 2024.
+    # No longer works since a website update some time in 2025.
+    # Replaced by lSelenium.getProductURL(cupCode)
+    
     #step 1
     tmpURL="https://www.saq.com/fr/search/ajax/suggest/?q=0%s"%cupCode
     r3=urllib.request.urlopen(tmpURL)
     saqObj=json.load(r3)
     tmpURL2=saqObj[1]['url']
+
     #step 2
     session = HTMLSession()
     r1 = session.get(tmpURL2)
@@ -55,6 +59,13 @@ def getSaqCode(cupCode):
     #bug fix July 28th 2021 after an upgrade of SAQ website
     if not saqCode.isnumeric():
         saqCode=saqCode.split('\n')[0]
+    return saqCode
+
+
+def getSaqCode(cupCode):
+    #tmpURL2 = getSAQCode_fromCUP_old_obsolete(cupCode)
+    productURL = lSelenium.getProductURL(cupCode)
+    saqCode = productURL.split('/')[-1]
     return saqCode
 
 
