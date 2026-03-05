@@ -5,7 +5,7 @@ Created on Thu Jan 21 22:48:33 2021
 
 @author: dcote
 """
-theVersion="1.3.0"
+theVersion="2.0.0"
 
 import sys
 import libDataframe as lDF

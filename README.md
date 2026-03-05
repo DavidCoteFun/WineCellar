@@ -22,6 +22,7 @@ pip install pyzbar
 pip install opencv-python
 pip install requests-html
 pip install imutils
+pip install selenium
 
 *) Resources:
 https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-with-zbar/
@@ -37,7 +38,8 @@ Version 1.0.3 --> Option d'ajouter code SAQ manuellement, fonction resume_de_la_
 Version 1.0.4 --> Minor bug fix avec getWebInfo avec cup "custom"
 Version 1.1.0: mise à jour de libWeb.py pour suivre le nouveau site de la SAQ (28.07.2021)
 Version 1.2.0: changed csv schema to use "|" separator, split code from data with new WineCellarData repo
-Version 1.3.0: ajout de l'option date, unification de Boire et Editer. 
+Version 1.3.0: ajout de l'option date, unification de Boire et Editer.
+Version 2.0.0: Major update switching to Selenium to get info from the web
 ```
 
 ## Usage:
