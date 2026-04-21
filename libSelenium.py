@@ -12,9 +12,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 def getProductURL(cupCode):
-    print("getProductULR for CUP %s"%cupCode)
+    print("getProductURL for CUP %s"%cupCode)
     beginURL="https://www.saq.com/fr/catalogsearch/result/?q=0%s&catalog_type=1"%cupCode
-    productURL=""
+    productURL=None
 
     from selenium.webdriver.safari.options import Options
     options = Options()
@@ -53,6 +53,6 @@ def getProductURL(cupCode):
             else:
                 iA=nAttempts
 
-    print("getProductULR %s"%productURL)
+    print("getProductURL %s"%productURL)
     return productURL
 
