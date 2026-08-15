@@ -42,6 +42,7 @@ Version 1.3.0 ajout de l'option date, unification de Boire et Editer.
 Version 2.0.0 Major update switching to Selenium to get info from the web
 Version 2.0.1 Ajout input manuel By.PARTIAL_LINK_TEXT dans Selenium si la page n'est pas trouvée automatiquement
 Version 2.1.0 Support du site web de la LCBO avec entrée manuelle de l'URL
+Version 2.1.1 Bug fix pour productInfo de LCBO
 ```
 
 ## Usage:

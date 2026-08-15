@@ -223,7 +223,7 @@ def getInfoFromLCBOWeb(myURL,debug=False):
             #    myInfo['']=value
         i+=1
 
-    myInfo['ProductInfo']=""
+    myInfo['ProductInfo']=rawHTML.split('|')[0]
     myInfo['Millesime']=0
 
     if debug:
