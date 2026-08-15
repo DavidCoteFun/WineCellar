@@ -98,7 +98,7 @@ if myCUP:
     
     if getWeb:
         print("*** Getting Web info ***")
-        webInfo=lWeb.getInfoFromSAQ(myCUP,debug=Debug)
+        webInfo=lWeb.getInfoFromWeb(myCUP,debug=Debug)
         webInfo=lDF.webSaqToStandardSchema(webInfo)
         bInfo.add(webInfo)
         pass
