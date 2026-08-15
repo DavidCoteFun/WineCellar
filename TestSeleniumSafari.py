@@ -17,7 +17,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-cupCode='3701523800029'
+#cupCode='3701523800029'
+cupCode='8396514500061'
 beginURL="https://www.saq.com/fr/catalogsearch/result/?q=0%s&catalog_type=1"%cupCode
 tmpURL2=""
 
@@ -43,7 +44,7 @@ except:
     pass
 
 print("[%.1f sec] Clicking on product ..."%(time.perf_counter()-start_time))
-nAttempts=10
+nAttempts=2
 iA=0
 b1=None
 while iA<nAttempts:
@@ -55,6 +56,11 @@ while iA<nAttempts:
     except:
         iA+=1
         print("  attempt %i"%iA)
+
+if b1 is None:
+    motCle=input("Incapable de trouver l'élément. Quel mot clé? \n")
+    b1 = WebDriverWait(driver,2).until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, motCle)))
+    driver.execute_script("arguments[0].click();", b1)
 
 print("[%.1f sec] Getting final url ..."%(time.perf_counter()-start_time))
 if b1:
@@ -71,3 +77,8 @@ if b1:
 print(tmpURL2)
 print("Total %.1f seconds"%(time.perf_counter() - start_time))
 
+"""
+bb = WebDriverWait(driver,2).until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, "Domaine")))
+bb = WebDriverWait(driver,2).until(EC.visibility_of_element_located((By.TAG_NAME, 'a href=//"https://www.saq.com/fr/15620149"')))
+
+"""

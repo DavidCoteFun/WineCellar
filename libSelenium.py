@@ -29,7 +29,7 @@ def getProductURL(cupCode):
     except:
         pass
 
-    nAttempts=10
+    nAttempts=2
     iA=0
     b1=None
     while iA<nAttempts:
@@ -42,8 +42,13 @@ def getProductURL(cupCode):
             iA+=1
             print("  attempt %i"%iA)
 
+    if b1 is None:
+        motCle=input("Incapable de trouver l'élément. Quel mot clé? \n")
+        b1 = WebDriverWait(driver,2).until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, motCle)))
+        driver.execute_script("arguments[0].click();", b1)
+            
     if b1:
-        nAttempts=10
+        nAttempts=5
         iA=0
         while iA<nAttempts:
             productURL=driver.current_url

@@ -40,6 +40,7 @@ Version 1.1.0: mise à jour de libWeb.py pour suivre le nouveau site de la SAQ (
 Version 1.2.0: changed csv schema to use "|" separator, split code from data with new WineCellarData repo
 Version 1.3.0: ajout de l'option date, unification de Boire et Editer.
 Version 2.0.0: Major update switching to Selenium to get info from the web
+Version 2.0.1: Ajout input manuel By.PARTIAL_LINK_TEXT dans Selenium si la page n'est pas trouvée automatiquement
 ```
 
 ## Usage:
@@ -86,6 +87,7 @@ cup:xyz
 
 ### To Do
 ```
+-Ajouter une colonne pour la date à laquelle la bouteille a été entrée dans la base de donnée.
 -Enlever la fonction lDF.boire_bouteille() dans MaCave.py. Utilser uniquement lDF.modifier_bouteille() à la place.
 -Mettre à jour la fonction qui lit depuis le site web de la SAQ
 -Ajouter une colonne dans la DB pour la date bouteille ajoutée
