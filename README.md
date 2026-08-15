@@ -30,17 +30,18 @@ https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-w
 
 ## Historique
 ```
-Version 1.0.0 --> 21 mars 2021. Pas de bug connu.
-Version 1.0.1 --> Option d'ajouter plusieurs bouteilles d'un coup (28.03.2021)
-Version 1.0.2 --> Option d'ajouter un CUP manuellement et fonction d'aide (02.04.2021)
-Version 1.0.3 --> Option d'ajouter code SAQ manuellement, fonction resume_de_la_cave (18.04.2021)
+Version 1.0.0 21 mars 2021. Pas de bug connu.
+Version 1.0.1 Option d'ajouter plusieurs bouteilles d'un coup (28.03.2021)
+Version 1.0.2 Option d'ajouter un CUP manuellement et fonction d'aide (02.04.2021)
+Version 1.0.3 Option d'ajouter code SAQ manuellement, fonction resume_de_la_cave (18.04.2021)
 23 avil 2021: premier inventaire complet de la cave (utilisant v1.0.3)
-Version 1.0.4 --> Minor bug fix avec getWebInfo avec cup "custom"
-Version 1.1.0: mise à jour de libWeb.py pour suivre le nouveau site de la SAQ (28.07.2021)
-Version 1.2.0: changed csv schema to use "|" separator, split code from data with new WineCellarData repo
-Version 1.3.0: ajout de l'option date, unification de Boire et Editer.
-Version 2.0.0: Major update switching to Selenium to get info from the web
-Version 2.0.1: Ajout input manuel By.PARTIAL_LINK_TEXT dans Selenium si la page n'est pas trouvée automatiquement
+Version 1.0.4 Minor bug fix avec getWebInfo avec cup "custom"
+Version 1.1.0 mise à jour de libWeb.py pour suivre le nouveau site de la SAQ (28.07.2021)
+Version 1.2.0 changed csv schema to use "|" separator, split code from data with new WineCellarData repo
+Version 1.3.0 ajout de l'option date, unification de Boire et Editer.
+Version 2.0.0 Major update switching to Selenium to get info from the web
+Version 2.0.1 Ajout input manuel By.PARTIAL_LINK_TEXT dans Selenium si la page n'est pas trouvée automatiquement
+Version 2.1.0 Support du site web de la LCBO avec entrée manuelle de l'URL
 ```
 
 ## Usage:

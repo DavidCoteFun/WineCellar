@@ -44,8 +44,11 @@ def getProductURL(cupCode):
 
     if b1 is None:
         motCle=input("Incapable de trouver l'élément. Quel mot clé? \n")
-        b1 = WebDriverWait(driver,2).until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, motCle)))
-        driver.execute_script("arguments[0].click();", b1)
+        if "lcbo.com" in motCle:
+            productURL = motCle
+        else:
+            b1 = WebDriverWait(driver,2).until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, motCle)))
+            driver.execute_script("arguments[0].click();", b1)
             
     if b1:
         nAttempts=5

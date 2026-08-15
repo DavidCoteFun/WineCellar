@@ -12,29 +12,47 @@ import urllib.request
 import libSelenium as lSelenium
 
 
-def getInfoFromSAQ(cupCode,debug=False):
+def getInfoFromWeb(cupCode,debug=False):
     saqInfo={}
+    saqCode=None
+    productURL=None
+
     try:
-        saqCode=getSaqCode(cupCode)
+        productURL = lSelenium.getProductURL(cupCode)
+
     except:
         print("Incapable de trouver le code SAQ a partir du CUP: %s"%cupCode)
         saqInfo['Code SAQ']="Inexistant"
         saqInfo['Code CUP']=cupCode
-        rep=input("Entrer le code SAQ manuellement ou <enter> continuer sans code\n")
-        if len(rep)>3:
+        rep=input("Entrer le code SAQ or l'URL manuellement, ou <enter> continuer sans code\n")
+        if ".com" in rep:
+            productURL = rep
+        elif len(rep)>3:
             print(" ")
             saqCode=rep
+            productURL="https://www.saq.com/fr/%s"%saqCode
         else:
             return saqInfo
 
-    try:
-        saqInfo=getInfoFromSaqCode(saqCode,debug)
-    except:
-        print("Incapable de trouver l'info pour le code SAQ: %s"%saqCode)
-        print("https://www.saq.com/fr/%s"%saqCode)
+    if "saq.com" in productURL:
+        saqCode = productURL.split('/')[-1]
+
+        try:
+            saqInfo=getInfoFromSaqCode(saqCode,debug)
+            saqInfo['Code SAQ']=saqCode
+        except:
+            print("Incapable de trouver l'info pour le code SAQ: %s"%saqCode)
+            print("https://www.saq.com/fr/%s"%saqCode)
+
+    elif "lcbo.com" in productURL:
+        try:
+            saqInfo=getInfoFromLCBOWeb(productURL,debug)
+        except:
+            print("Incapable de trouver l'info pour la LCBO")
+            print(productURL)
+
     
     #Easier to stick to original formats, not webpage info, for these codes
-    saqInfo['Code SAQ']=saqCode
     saqInfo['Code CUP']=cupCode
     saqInfo['Bue']="saq_web"
     return saqInfo
@@ -62,7 +80,7 @@ def getSAQCode_fromCUP_old_obsolete(cupCode):
     return saqCode
 
 
-def getSaqCode(cupCode):
+def getSaqCode_obsolete(cupCode):
     #tmpURL2 = getSAQCode_fromCUP_old_obsolete(cupCode)
     productURL = lSelenium.getProductURL(cupCode)
     saqCode = productURL.split('/')[-1]
@@ -118,5 +136,97 @@ def getInfoFromSaqCode(saqCode,debug=False):
         tmp=float(tmp.replace('L','').replace(',','.'))
         myInfo['Format']=int(1000*tmp)
         
+    return myInfo
+
+
+
+def getInfoFromLCBOWeb(myURL,debug=False):
+    myInfo={}
+    if debug:
+        print("WEB INFO:")
+        print(myURL)
+
+    session = HTMLSession()
+    r2 = session.get(myURL)
+    rawHTML=r2.html.text
+
+    try:
+        prix=float(rawHTML.split('final_price":')[1].split(',')[0])
+        myInfo['Prix']=float(rawHTML.split('final_price":')[1].split(',')[0])
+        if debug:
+            print("Prix: %.2f $"%prix)
+    except:
+        print("Prix inconnu")
+
+
+    myInfo['CodeSAQ']=""
+    if "lcbo.com/fr/" in myURL:
+        if myInfo['CodeSAQ']=="":
+            try:
+                myInfo['CodeSAQ']=rawHTML.split('LCBO n° :\n')[1].split('\n')[0]
+            except:
+                myInfo['CodeSAQ']=""
+
+        if myInfo['CodeSAQ']=="":
+            try:
+                myInfo['CodeSAQ']=rawHTML.split('VINTAGES\xa0:\n')[1].split('\n')[0]
+            except:
+                myInfo['CodeSAQ']=""
+
+    else:
+        if myInfo['CodeSAQ']=="":
+            try:
+                myInfo['CodeSAQ']=rawHTML.split('LCBO#:\n')[1].split('\n')[0]
+            except:
+                myInfo['CodeSAQ']=""
+
+        if myInfo['CodeSAQ']=="":
+            try:
+                myInfo['CodeSAQ']=rawHTML.split('VINTAGES#:\n')[1].split('\n')[0]
+            except:
+                myInfo['CodeSAQ']=""
+
+        
+    if "Plus de détails" in rawHTML:
+        details=rawHTML.split('Plus de détails')[1].split('\n')
+    elif "More Details" in rawHTML:
+        details=rawHTML.split('More Details')[1].split('\n')
+    else:
+        print("Incapable de trouver les détails du produit LCBO")
+        details=[]
+
+    allKeys=["Date de la livraison","Degré d'alcool","Origine","Appellation","Par","Teneur en sucre","Style","Cépage"]
+    allKeys+=["Release Date","Alcohol/Vol","Made In","By","Sugar Content","Style","Varietal"]
+
+    i=0
+    while i<len(details):
+        key=details[i]
+        if key in allKeys:
+            value = details[i+1]
+            if debug:
+                print("%s: %s"%(key,value))
+            if key=="Degré d'alcool" or key=="Alcohol/Vol":
+                alcool=float(value.split('%')[0])
+                myInfo['Alcool']=alcool
+            elif key=="Origine" or key=="Made In":
+                myInfo['Region']=value
+            elif key=="Appellation":
+                myInfo['Appellation']=value
+            elif key=="Par" or key=="By":
+                myInfo['Producteur']=value
+            elif key=="Teneur en sucre" or key=="Sugar Content":
+                sucre=float(value.split('\xa0')[0])
+                myInfo['Sucre']=sucre
+            elif key=="Cépage" or key=="Varietal":
+                myInfo['Cepages']=value
+            #elif key=="" or key=="":
+            #    myInfo['']=value
+        i+=1
+
+    myInfo['ProductInfo']=""
+    myInfo['Millesime']=0
+
+    if debug:
+        print(myInfo)
     return myInfo
 
