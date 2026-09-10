@@ -2,6 +2,13 @@
 
 https://github.com/DavidCoteFun/WineCellar
 
+# Tested with Python 3.9.23 + Rosetta on Sept 8th 2026
+
+conda create --platform osx-64 --name WineCellarEnv python=3.10
+conda activate WineCellarEnv                           
+#conda deactivate
+
+
 ## Instructions pour installer le soft
 ```
 *) Install Anaconda3
@@ -17,12 +24,15 @@ brew install zbar
 arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 arch -x86_64 /usr/local/bin/brew install zbar 
 
+
 *) Additional python libraries:
 pip install pyzbar
 pip install opencv-python
 pip install requests-html
 pip install imutils
 pip install selenium
+pip install pandas
+pip install lxml_html_clean
 
 *) Resources:
 https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-with-zbar/
@@ -43,6 +53,7 @@ Version 2.0.0 Major update switching to Selenium to get info from the web
 Version 2.0.1 Ajout input manuel By.PARTIAL_LINK_TEXT dans Selenium si la page n'est pas trouvée automatiquement
 Version 2.1.0 Support du site web de la LCBO avec entrée manuelle de l'URL
 Version 2.1.1 Bug fix pour productInfo de LCBO
+Version 2.2.0 Migration to Anaconda Python 3.10 (Rosetta/Intel platform)
 ```
 
 ## Usage:

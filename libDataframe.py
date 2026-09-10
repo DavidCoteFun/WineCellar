@@ -181,7 +181,8 @@ def ajouter_bouteille(btleInfo,nBtles=1):
         btleInfo.resolved_dict['Bue']="non"
         i=0
         while i<nBtles:
-            gDF=gDF.append(btleInfo.resolved_dict,ignore_index=True)
+            gDF.loc[len(gDF)]=btleInfo.resolved_dict
+            #gDF=gDF.append(btleInfo.resolved_dict,ignore_index=True) --> deprecated from Python 3.10
             i+=1
             pass
     else:
